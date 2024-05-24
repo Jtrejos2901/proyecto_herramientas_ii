@@ -1,6 +1,6 @@
 # Proyecto de Herramientas para Ciencias de Datos II
 
-## Descripcción
+## Descripción
 En este repositorio se almacenará todo el proyecto del curso Herramientas para Ciencias de Datos II de la carrera Ciencias Actuariales de la Universidad de Costa Rica al 2024.
 
 ## Integrantes
