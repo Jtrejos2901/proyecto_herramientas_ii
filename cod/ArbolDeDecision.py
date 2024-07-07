@@ -165,8 +165,10 @@ class PromediosPrecisionImportancias:
         self.mean_accuracy = None
         self.mean_feature_importance_df = None
         
+        np.random.seed(3435)  # set seed para tener consistencia al ejecutar sobre una misma cantidad
         self._run_iterations()
         self._print_results()
+        self.plot_feature_importances()
 
     def _run_iterations(self):
         accuracies = []
@@ -189,20 +191,12 @@ class PromediosPrecisionImportancias:
         for feature, importance in zip(self.mean_feature_importance_df['Feature'], self.mean_feature_importance_df['Importance']):
             print(f"{feature}: {importance:.2f}")
 
-
-
-
-class GraficoPromedioImportancias(PromediosPrecisionImportancias):
-    def __init__(self, data_path, n_iterations):
-        super().__init__(data_path, n_iterations)
-        self.plot_feature_importances()
-
     def plot_feature_importances(self):
         plt.figure(figsize=(10, 6))
         plt.barh(self.mean_feature_importance_df['Feature'], self.mean_feature_importance_df['Importance'], color='skyblue')
         plt.xlabel('Importance')
         plt.ylabel('Feature')
-        plt.title('Mean Feature Importances')
+        plt.title(f'Mean Feature Importances (Iterations: {self.n_iterations})')  # Incluimos el número de iteraciones en el título
         plt.tight_layout()
         plt.show()
 
@@ -222,5 +216,3 @@ class GraficoPromedioImportancias(PromediosPrecisionImportancias):
 # n_iterations = 100
 # iter_prec_import = PromediosPrecisionImportancias(data, n_iterations)
 
-
-# grafico_promedio_importancias = GraficoPromedioImportancias(data, n_iterations)
