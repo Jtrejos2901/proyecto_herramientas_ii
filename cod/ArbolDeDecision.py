@@ -28,7 +28,8 @@ class PrecisionImportancias:
             'Feature': self.__x.columns,
             'Importance': feature_importances
         })
-        
+
+    def display_results(self):
         print(f"Puntuación de precisión: {self.__accuracy:.2f}")
         for feature, importance in zip(self.__feature_importance_df['Feature'], self.__feature_importance_df['Importance']):
             print(f"{feature}: {importance:.2f}")
@@ -66,6 +67,7 @@ class PrecisionImportancias:
 
     def __str__(self):
         return f'PrecisionImportancias(data_path={self.__data_path}, accuracy={self.__accuracy})'
+
 
 
 class PrecisionImportanciasGrafico:
@@ -153,6 +155,59 @@ class ArbolDecisionCalidad:
         return f'ArbolDecisionCalidad(model={self.__model}, data_columns={self.__data_columns})'
 
 
+
+
+
+class PromediosPrecisionImportancias:
+    def __init__(self, data_path, n_iterations):
+        self.data_path = data_path
+        self.n_iterations = n_iterations
+        self.mean_accuracy = None
+        self.mean_feature_importance_df = None
+        
+        self._run_iterations()
+        self._print_results()
+
+    def _run_iterations(self):
+        accuracies = []
+        feature_importances_list = []
+
+        for _ in range(self.n_iterations):
+            prec_import = PrecisionImportancias(self.data_path)
+            accuracies.append(prec_import.accuracy)
+            feature_importances_list.append(prec_import.feature_importance_df['Importance'].values)
+
+        self.mean_accuracy = np.mean(accuracies)
+        mean_feature_importances = np.mean(feature_importances_list, axis=0)
+        self.mean_feature_importance_df = pd.DataFrame({
+            'Feature': prec_import.feature_importance_df['Feature'],
+            'Importance': mean_feature_importances
+        })
+
+    def _print_results(self):
+        print(f"Puntuación de precisión promedio: {self.mean_accuracy:.2f}")
+        for feature, importance in zip(self.mean_feature_importance_df['Feature'], self.mean_feature_importance_df['Importance']):
+            print(f"{feature}: {importance:.2f}")
+
+
+
+
+class GraficoPromedioImportancias(PromediosPrecisionImportancias):
+    def __init__(self, data_path, n_iterations):
+        super().__init__(data_path, n_iterations)
+        self.plot_feature_importances()
+
+    def plot_feature_importances(self):
+        plt.figure(figsize=(10, 6))
+        plt.barh(self.mean_feature_importance_df['Feature'], self.mean_feature_importance_df['Importance'], color='skyblue')
+        plt.xlabel('Importance')
+        plt.ylabel('Feature')
+        plt.title('Mean Feature Importances')
+        plt.tight_layout()
+        plt.show()
+
+
+
 # data = "D:\\Descargas\\diabetes.csv"
 
 # prec_import = PrecisionImportancias(data)
@@ -162,3 +217,10 @@ class ArbolDecisionCalidad:
 # arbol_decision = ArbolDecision(prec_import.dt, prec_import.data.columns[:-1])
 
 # arbol_decision_calidad = ArbolDecisionCalidad(prec_import.dt, prec_import.data.columns[:-1])
+
+
+# n_iterations = 100
+# iter_prec_import = PromediosPrecisionImportancias(data, n_iterations)
+
+
+# grafico_promedio_importancias = GraficoPromedioImportancias(data, n_iterations)
