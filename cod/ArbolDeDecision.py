@@ -115,7 +115,7 @@ class ArbolDecision:
         self.__data_columns = value
     
     def __plot_tree(self):
-        plt.figure(figsize=(20, 10))
+        plt.figure(figsize=(400, 200))
         plot_tree(self.__model, feature_names=self.__data_columns, class_names=['Non-Diabetic', 'Diabetic'], filled=True)
         plt.show()
 
@@ -124,35 +124,7 @@ class ArbolDecision:
 
 
 
-class ArbolDecisionCalidad:
-    def __init__(self, model, data_columns):
-        self.__model = model
-        self.__data_columns = data_columns
-        self.__plot_tree()
-    
-    @property
-    def model(self):
-        return self.__model
-    
-    @model.setter
-    def model(self, value):
-        self.__model = value
-    
-    @property
-    def data_columns(self):
-        return self.__data_columns
-    
-    @data_columns.setter
-    def data_columns(self, value):
-        self.__data_columns = value
-    
-    def __plot_tree(self):
-        plt.figure(figsize=(400, 200))
-        plot_tree(self.__model, feature_names=self.__data_columns, class_names=['Non-Diabetic', 'Diabetic'], filled=True)
-        plt.show()
 
-    def __str__(self):
-        return f'ArbolDecisionCalidad(model={self.__model}, data_columns={self.__data_columns})'
 
 
 
@@ -209,8 +181,6 @@ class PromediosPrecisionImportancias:
 # prec_import_grafico = PrecisionImportanciasGrafico(prec_import.feature_importance_df)
 
 # arbol_decision = ArbolDecision(prec_import.dt, prec_import.data.columns[:-1])
-
-# arbol_decision_calidad = ArbolDecisionCalidad(prec_import.dt, prec_import.data.columns[:-1])
 
 
 # n_iterations = 100
