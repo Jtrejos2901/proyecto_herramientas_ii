@@ -7,7 +7,49 @@ from sklearn.tree import plot_tree
 
 
 class PrecisionImportancias:
+    
     def __init__(self, data_path):
+        
+        '''
+        Definimos el constructor, recibe un str con el path de la data. Además,
+        carga los datos, los normaliza y entrena el modelo. 
+    
+        Parameters
+        ----------
+        data_path (str): dirección de la data. 
+    
+        Args: 
+        -----
+        data (pd.DataFrame): contiene los datos cargados desde el archivo CSV.
+        x_data (pd.DataFrame): contiene todas las columnas de self.__data excepto 
+                               la columna "Outcome".
+        y (np.ndarray): contiene los valores de la columna "Outcome" de 
+                        self.__data.
+        x (pd.DataFrame): contiene los datos normalizados de x_data. 
+                          La normalización se realiza restando el valor mínimo 
+                          y dividiendo por el rango de los datos.
+        x_train (pd.DataFrame): contiene los datos de entrenamiento obtenidos a
+                                partir de aplicar train_test_split.       
+        x_test (pd.DataFrame): contiene los datos de testing obtenidos a partir
+                               de aplicar train_test_split
+        
+        y_train (np.ndarray): contiene los indices de entrenamiento a partir
+                              de aplicar train_test_split. 
+        y_test (np.ndarray): contiene lis indices de entrenamiento a partir de 
+                             aplicar train_test_split. 
+        dt (objeto DecisionTreeClassifier): clasificador de árbol de decisión 
+                                            de Scikit-learn.  
+        feature_importance_df (pd.DataFrame): contiene las características y  
+                                              sus respectivas importancias 
+                                              después de entrenar el modelo. 
+        accuracy (float): contiene el score de exactitud del modelo. 
+        train_model() (método): entrena el modelo y actualiza accuracy y 
+                                feature_importance_df.                            
+       
+        Returns
+        ------    
+        '''
+        
         self.__data_path = data_path
         self.__data = pd.read_csv(data_path)
         self.__x_data = self.__data.drop(["Outcome"], axis=1)
@@ -20,6 +62,20 @@ class PrecisionImportancias:
         self.__train_model()
 
     def __train_model(self):
+        
+        '''
+        Método que entrena el modelo de árbol de decisión y calcula la 
+        exactitud y la importancia de las características, las guarda en los 
+        args inicializados en el init.
+        
+        Parameters
+        ----------
+        
+        Returns
+        -------
+        
+        '''
+        
         self.__dt.fit(self.__x_train, self.__y_train)
         self.__accuracy = self.__dt.score(self.__x_test, self.__y_test)
         
@@ -30,16 +86,55 @@ class PrecisionImportancias:
         })
 
     def display_results(self):
-        print(f"Puntuación de precisión: {self.__accuracy:.2f}")
+        
+        '''
+        Método que imprime las exactitudes del modelo. Se le aplica el método 
+        zip el cual permite agregar elementos iterables en una unica iteración.
+        
+        Parameters
+        ----------
+        
+        Returns
+        -------
+        
+        '''
+        print(f"Puntuación de exactitud: {self.__accuracy:.2f}")
         for feature, importance in zip(self.__feature_importance_df['Feature'], self.__feature_importance_df['Importance']):
             print(f"{feature}: {importance:.2f}")
 
     @property
     def data_path(self):
+        '''
+        Definimos el getter para la dirección de la data. 
+         
+        Parameters
+        ----------
+               
+               
+        Returns
+        ------    
+        self.__data_path (str): retorna el str original. 
+        '''
         return self.__data_path
 
     @data_path.setter
     def data_path(self, value):
+        
+        '''
+        Definimos el setter para la dirección de la data. Esto modifica todos 
+        los args que se definiron en el init, enonces hay que acutalizar cada 
+        uno. 
+        
+         
+        Parameters
+        ----------
+        value (str): nueva dirección de la data.       
+               
+        Returns
+        ------    
+       
+        ''' 
+        
         self.__data_path = value
         self.__data = pd.read_csv(value)
         self.__x_data = self.__data.drop(["Outcome"], axis=1)
@@ -51,21 +146,83 @@ class PrecisionImportancias:
 
     @property
     def accuracy(self):
+        '''
+        Definimos el getter para la exactitud de la data. 
+         
+        Parameters
+        ----------
+               
+               
+        Returns
+        ------    
+        self.__accuracy (float): retorna el accuracy original.
+        '''
         return self.__accuracy
     
     @property
     def feature_importance_df(self):
+        '''
+        Definimos el getter para el dataframe con la info de la importancia de
+        las características. 
+         
+        Parameters
+        ----------
+               
+               
+        Returns
+        ------    
+        self.__feature_importance_df (pd.DataFrame): retorna el dataframe de 
+                                                     importancias original.
+        '''
         return self.__feature_importance_df
 
     @property
     def dt(self):
+        '''
+        Definimos el getter para el clasificador de árbol de decisión 
+        de Scikit-learn
+         
+        Parameters
+        ----------
+               
+               
+        Returns
+        ------    
+        dt (objeto DecisionTreeClassifier): retorna el objeto original.
+                                                    
+        '''
         return self.__dt
 
     @property
     def data(self):
+        '''
+        Definimos el getter el pandas dataframe con los datos del csv. 
+         
+        Parameters
+        ----------
+               
+               
+        Returns
+        ------    
+        data (pd.DataFrame): retorna el DataFrame con la data del csv original.
+                                                    
+        '''
         return self.__data
 
     def __str__(self):
+        '''
+        Definimos el str del objeto PrecisionImpotancia.
+         
+        Parameters
+        ----------
+               
+        Returns
+        ------    
+        Retorna una string con el la dirección de la data, la exactitud del 
+        modelo.
+               
+        '''
+        
         return f'PrecisionImportancias(data_path={self.__data_path}, accuracy={self.__accuracy})'
 
 
