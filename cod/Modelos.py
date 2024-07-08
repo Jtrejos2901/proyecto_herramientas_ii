@@ -8,6 +8,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_confusion_matrix
 from sklearn.ensemble import RandomForestClassifier # Para el RF
+from sklearn.tree import DecisionTreeClassifier # Para el ADD
+import matplotlib.pyplot as plt
+from sklearn.tree import plot_tree
 
 # Se crea la clase, PreparacionDatos la cual se encargará de la división de los 
 # en los conjuntos de entranamiento y prueba. 
@@ -393,6 +396,109 @@ class RadialSVM(PreparacionDatos):
         # Se grafican los resultados.
         Graficos.feature_importance(importances, variables, 'Importancias caso Radial')
 
+# Se crea la clase para el modelo de Arboles de decisión.
+class ArbolDeDecision(PreparacionDatos):
+    # Se crea el constructor de la clase.
+    def __init__(self, df, target_variable, param_grid=None, random_state=1000):
+        '''
+        Método contructor de la clase ArbolDeDecision.
+
+        Parameters:
+            df (pandas.DataFrame): El dataframe o tabla con los datos a
+                                   particionar.
+            target_variable (string): EL nombre de la variable a predecir.
+            param_grid (dict o list de dictionarios): Diccionario con los 
+                                                      parametros.
+            random_state (int): Semiila para la reproducibilidad de los 
+                                resultados.
+            
+        Returns:
+            None.
+        '''
+        PreparacionDatos.__init__(self, df, target_variable)
+        self.extraer_variables()
+        self.X = (self.X - np.min(self.X)) / (np.max(self.X - np.min(self.X)))
+        self.dividir_datos()
+        self.dt = DecisionTreeClassifier()
+
+    # Método para ajustar el modelo.
+    def fit(self):
+        
+        '''
+        Método que entrena el modelo de árbol de decisión y calcula la 
+        exactitud y la importancia de las características, las guarda en los 
+        args inicializados en el init.
+        
+        Parameters
+        ----------
+        
+        Returns
+        -------
+        
+        '''
+        
+        self.dt.fit(self.X_train, self.Y_train)
+    
+    # Método para generar las prediciones del modelo.
+    def predict(self):
+        '''
+        Método para generar la prediciones del modelo de Arboles de decision
+
+        Parameters:
+            None.
+            
+        Returns:
+            self.model.predict (ndarray): Arreglo con las predicicones.
+        '''
+        return self.dt.predict(self.X_test)
+    
+    # Método para sacar la precisión del modelo. 
+    def accuracy(self):
+        '''
+        Método para obtener la precisión del modelo de arboles de decision
+
+        Parameters:
+            None.
+            
+        Returns:
+            accuracy (float): Nivel de precisión del modelo.
+        '''
+        # Se obtiene el nivel de precisión del modelo.
+        accuracy = self.dt.score(self.X_test, self.Y_test)
+        
+        
+        print(f"La precisión del test es: {100*accuracy}%")
+        return accuracy
+    
+    # Método para generar el gráfico de la matriz de confunción.
+    def plot_confusion_matrix(self):
+        '''
+        Método para generar el gráfico de la matriz de confunción del modelo 
+        Arboles de decisión
+
+        Parameters:
+            None.
+            
+        Returns:
+            None.
+        '''
+        predictions = self.predict()
+        Graficos.plot_confusion_matrix(self.Y_test, predictions)
+
+    # Método para generar el gráfico de importancias.
+    def feature_importance(self, n_repeats=10, random_state=123, n_jobs=2):
+        result = permutation_importance(self.dt, self.X_test, self.Y_test, n_repeats=n_repeats, random_state=random_state, n_jobs=n_jobs)
+        importances = result.importances_mean
+        variables = self.X.columns
+
+        Graficos.feature_importance(importances, variables, 'Importancias caso Arboles de decisión')
+    
+    def plot_tree(self):
+        plt.figure(figsize=(400, 200))
+        plot_tree(self.dt, feature_names=self.df.columns[:-1], class_names=['Non-Diabetic', 'Diabetic'], filled=True)
+        plt.show()
+        
+    
 # Se crea la clase para el modelo de bosques aleatorios.
 class RandomForestModel(PreparacionDatos):
     # Se crea el constructor de la clase.
