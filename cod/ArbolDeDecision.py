@@ -272,7 +272,7 @@ class ArbolDecision:
         self.__data_columns = value
     
     def __plot_tree(self):
-        plt.figure(figsize=(20, 10))
+        plt.figure(figsize=(400, 200))
         plot_tree(self.__model, feature_names=self.__data_columns, class_names=['Non-Diabetic', 'Diabetic'], filled=True)
         plt.show()
 
@@ -281,35 +281,7 @@ class ArbolDecision:
 
 
 
-class ArbolDecisionCalidad:
-    def __init__(self, model, data_columns):
-        self.__model = model
-        self.__data_columns = data_columns
-        self.__plot_tree()
-    
-    @property
-    def model(self):
-        return self.__model
-    
-    @model.setter
-    def model(self, value):
-        self.__model = value
-    
-    @property
-    def data_columns(self):
-        return self.__data_columns
-    
-    @data_columns.setter
-    def data_columns(self, value):
-        self.__data_columns = value
-    
-    def __plot_tree(self):
-        plt.figure(figsize=(400, 200))
-        plot_tree(self.__model, feature_names=self.__data_columns, class_names=['Non-Diabetic', 'Diabetic'], filled=True)
-        plt.show()
 
-    def __str__(self):
-        return f'ArbolDecisionCalidad(model={self.__model}, data_columns={self.__data_columns})'
 
 
 
@@ -322,8 +294,10 @@ class PromediosPrecisionImportancias:
         self.mean_accuracy = None
         self.mean_feature_importance_df = None
         
+        np.random.seed(3435)  # set seed para tener consistencia al ejecutar sobre una misma cantidad
         self._run_iterations()
         self._print_results()
+        self.plot_feature_importances()
 
     def _run_iterations(self):
         accuracies = []
@@ -346,20 +320,12 @@ class PromediosPrecisionImportancias:
         for feature, importance in zip(self.mean_feature_importance_df['Feature'], self.mean_feature_importance_df['Importance']):
             print(f"{feature}: {importance:.2f}")
 
-
-
-
-class GraficoPromedioImportancias(PromediosPrecisionImportancias):
-    def __init__(self, data_path, n_iterations):
-        super().__init__(data_path, n_iterations)
-        self.plot_feature_importances()
-
     def plot_feature_importances(self):
         plt.figure(figsize=(10, 6))
         plt.barh(self.mean_feature_importance_df['Feature'], self.mean_feature_importance_df['Importance'], color='skyblue')
         plt.xlabel('Importance')
         plt.ylabel('Feature')
-        plt.title('Mean Feature Importances')
+        plt.title(f'Mean Feature Importances (Iterations: {self.n_iterations})')  # Incluimos el número de iteraciones en el título
         plt.tight_layout()
         plt.show()
 
@@ -373,11 +339,7 @@ class GraficoPromedioImportancias(PromediosPrecisionImportancias):
 
 # arbol_decision = ArbolDecision(prec_import.dt, prec_import.data.columns[:-1])
 
-# arbol_decision_calidad = ArbolDecisionCalidad(prec_import.dt, prec_import.data.columns[:-1])
-
 
 # n_iterations = 100
 # iter_prec_import = PromediosPrecisionImportancias(data, n_iterations)
 
-
-# grafico_promedio_importancias = GraficoPromedioImportancias(data, n_iterations)
