@@ -523,7 +523,7 @@ class LinearSVM(PreparacionDatos):
 # Se crea la clase para el modelo SVM con Kernel radial.
 class RadialSVM(PreparacionDatos):
     # Se crea el constructor de la clase.
-    def __init__(self, df, target_variable, param_grid=None, cv=3, scoring='accuracy', n_jobs=-1, verbose=0):
+    def __init__(self, df, target_variable, param_grid=None, cv=100, scoring='accuracy', n_jobs=-1, verbose=0):
         '''
         Método contructor de la clase RadialSVM.
 
