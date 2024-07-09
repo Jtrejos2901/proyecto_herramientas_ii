@@ -36,7 +36,232 @@ class PreparacionDatos:
         self.Y_train = None
         self.Y_test = None
     
-    # Mñetodo para la extracción de variables.
+    @property
+    def df(self):
+        '''Obtiene el DataFrame actual.
+
+        Returns
+        -------
+        pandas.DataFrame
+            El DataFrame actual.
+        '''
+        return self.df
+
+    @df.setter
+    def df(self, nuevo_df):
+        '''Establece un nuevo DataFrame.
+
+        Parameters
+        ----------
+        nuevo_df : pandas.DataFrame
+            El nuevo DataFrame a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.df = nuevo_df
+
+    @property
+    def target_variable(self):
+        '''Obtiene la variable objetivo actual.
+
+        Returns
+        -------
+        str
+            La variable objetivo actual.
+        '''
+        return self.target_variable
+
+    @target_variable.setter
+    def target_variable(self, nueva_target_variable):
+        '''Establece una nueva variable objetivo.
+
+        Parameters
+        ----------
+        nueva_target_variable : str
+            La nueva variable objetivo a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.target_variable = nueva_target_variable
+
+    @property
+    def X(self):
+        '''Obtiene los datos de entrada X.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de entrada X.
+        '''
+        return self.X
+
+    @X.setter
+    def X(self, nuevo_X):
+        '''Establece nuevos datos de entrada X.
+
+        Parameters
+        ----------
+        nuevo_X : pandas.DataFrame
+            Los nuevos datos de entrada X a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.X = nuevo_X
+
+    @property
+    def Y(self):
+        '''Obtiene los datos de salida Y.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de salida Y.
+        '''
+        return self.Y
+
+    @Y.setter
+    def Y(self, nuevo_Y):
+        '''Establece nuevos datos de salida Y.
+
+        Parameters
+        ----------
+        nuevo_Y : pandas.DataFrame
+            Los nuevos datos de salida Y a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.Y = nuevo_Y
+
+    @property
+    def X_train(self):
+        '''Obtiene los datos de entrenamiento X.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de entrenamiento X.
+        '''
+        return self.X_train
+
+    @X_train.setter
+    def X_train(self, nuevo_X_train):
+        '''Establece nuevos datos de entrenamiento X.
+
+        Parameters
+        ----------
+        nuevo_X_train : pandas.DataFrame
+            Los nuevos datos de entrenamiento X a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.X_train = nuevo_X_train
+
+    @property
+    def X_test(self):
+        '''Obtiene los datos de prueba X.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de prueba X.
+        '''
+        return self.X_test
+
+    @X_test.setter
+    def X_test(self, nuevo_X_test):
+        '''Establece nuevos datos de prueba X.
+
+        Parameters
+        ----------
+        nuevo_X_test : pandas.DataFrame
+            Los nuevos datos de prueba X a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.X_test = nuevo_X_test
+
+    @property
+    def Y_train(self):
+        '''Obtiene los datos de entrenamiento Y.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de entrenamiento Y.
+        '''
+        return self.Y_train
+
+    @Y_train.setter
+    def Y_train(self, nuevo_Y_train):
+        '''Establece nuevos datos de entrenamiento Y.
+
+        Parameters
+        ----------
+        nuevo_Y_train : pandas.DataFrame
+            Los nuevos datos de entrenamiento Y a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.Y_train = nuevo_Y_train
+
+    @property
+    def Y_test(self):
+        '''Obtiene los datos de prueba Y.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de prueba Y.
+        '''
+        return self.Y_test
+
+    @Y_test.setter
+    def Y_test(self, nuevo_Y_test):
+        '''Establece nuevos datos de prueba Y.
+
+        Parameters
+        ----------
+        nuevo_Y_test : pandas.DataFrame
+            Los nuevos datos de prueba Y a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.Y_test = nuevo_Y_test
+
+    def __str__(self):
+        '''Devuelve una representación en cadena del estado del objeto.
+
+        Returns
+        -------
+        str
+            Cadena que representa el estado del objeto.
+        '''
+        return (f'DataFrame: {self.df}\n'
+                f'Variable objetivo: {self.target_variable}\n'
+                f'X: {self.X}\n'
+                f'Y: {self.Y}\n'
+                f'X_train: {self.X_train}\n'
+                f'X_test: {self.X_test}\n'
+                f'Y_train: {self.Y_train}\n'
+                f'Y_test: {self.Y_test}')
+
+    # Metodo para la extracción de variables.
     def extraer_variables(self):
         '''
         Método para extraer y definir las variables prdictorias y la variable a
@@ -161,6 +386,50 @@ class LinearSVM(PreparacionDatos):
         self.model = SVC(C=C, kernel='linear', random_state=random_state)
         self.extraer_variables()
         self.dividir_datos()
+    
+    @property
+    def model(self):
+        '''Obtiene el modelo SVM lineal.
+
+        Returns
+        -------
+        sklearn.svm.SVC
+            El modelo SVM lineal.
+        '''
+        return self.model
+
+    @model.setter
+    def model(self, nuevo_model):
+        '''Establece un nuevo modelo SVM lineal.
+
+        Parameters
+        ----------
+        nuevo_model : sklearn.svm.SVC
+            El nuevo modelo SVM lineal a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.model = nuevo_model
+
+    def __str__(self):
+        '''Devuelve una representación en cadena del estado del objeto LinearSVM.
+
+        Returns
+        -------
+        str
+            Cadena que representa el estado del objeto LinearSVM.
+        '''
+        return (f'DataFrame: {self.df}\n'
+                f'Variable objetivo: {self.target_variable}\n'
+                f'X: {self.X}\n'
+                f'Y: {self.Y}\n'
+                f'X_train: {self.X_train}\n'
+                f'X_test: {self.X_test}\n'
+                f'Y_train: {self.Y_train}\n'
+                f'Y_test: {self.Y_test}\n'
+                f'Modelo SVM: {self.model}')
     
     # Método para ajustar el modelo.
     def fit(self):
@@ -290,6 +559,76 @@ class RadialSVM(PreparacionDatos):
         self.extraer_variables()
         self.dividir_datos()
 
+    @property
+    def grid_search(self):
+        '''Obtiene el objeto GridSearchCV.
+
+        Returns
+        -------
+        sklearn.model_selection.GridSearchCV
+            El objeto GridSearchCV.
+        '''
+        return self.grid_search
+
+    @grid_search.setter
+    def grid_search(self, nuevo_grid_search):
+        '''Establece un nuevo objeto GridSearchCV.
+
+        Parameters
+        ----------
+        nuevo_grid_search : sklearn.model_selection.GridSearchCV
+            El nuevo objeto GridSearchCV a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.grid_search = nuevo_grid_search
+
+    @property
+    def best_model(self):
+        '''Obtiene el mejor modelo encontrado por GridSearchCV.
+
+        Returns
+        -------
+        sklearn.svm.SVC
+            El mejor modelo SVM encontrado por GridSearchCV.
+        '''
+        return self.best_model
+
+    @best_model.setter
+    def best_model(self, nuevo_best_model):
+        '''Establece el mejor modelo encontrado por GridSearchCV.
+
+        Parameters
+        ----------
+        nuevo_best_model : sklearn.svm.SVC
+            El nuevo mejor modelo SVM a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.best_model = nuevo_best_model
+
+    def __str__(self):
+        '''Devuelve una representación en cadena del estado del objeto RadialSVM.
+
+        Returns
+        -------
+        str
+            Cadena que representa el estado del objeto RadialSVM.
+        '''
+        return (f'DataFrame: {self.df}\n'
+                f'Variable objetivo: {self.target_variable}\n'
+                f'X: {self.X}\n'
+                f'Y: {self.Y}\n'
+                f'X_train: {self.X_train}\n'
+                f'X_test: {self.X_test}\n'
+                f'Y_train: {self.Y_train}\n'
+                f'Y_test: {self.Y_test}\n'
+                f'GridSearchCV: {self.grid_search}\n'
+                f'Mejor Modelo: {self.best_model}')
     # Método para ajustar el modelo.
     def fit(self):
         '''
@@ -419,6 +758,234 @@ class ArbolDeDecision(PreparacionDatos):
         self.feature_importance_df = None
         self.accuracy_score = None
 
+    @property
+    def df(self):
+        '''Obtiene el DataFrame actual.
+
+        Returns
+        -------
+        pandas.DataFrame
+            El DataFrame actual.
+        '''
+        return self.df
+
+    @df.setter
+    def df(self, nuevo_df):
+        '''Establece un nuevo DataFrame.
+
+        Parameters
+        ----------
+        nuevo_df : pandas.DataFrame
+            El nuevo DataFrame a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.df = nuevo_df
+
+    @property
+    def target_variable(self):
+        '''Obtiene la variable objetivo actual.
+
+        Returns
+        -------
+        str
+            La variable objetivo actual.
+        '''
+        return self.target_variable
+
+    @target_variable.setter
+    def target_variable(self, nueva_target_variable):
+        '''Establece una nueva variable objetivo.
+
+        Parameters
+        ----------
+        nueva_target_variable : str
+            La nueva variable objetivo a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.target_variable = nueva_target_variable
+
+    @property
+    def x_data(self):
+        '''Obtiene los datos de características (X) excluyendo la variable objetivo.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de características (X).
+        '''
+        return self.x_data
+
+    @x_data.setter
+    def x_data(self, nuevo_x_data):
+        '''Establece nuevos datos de características (X) excluyendo la variable objetivo.
+
+        Parameters
+        ----------
+        nuevo_x_data : pandas.DataFrame
+            Los nuevos datos de características (X) a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.x_data = nuevo_x_data
+
+    @property
+    def y(self):
+        '''Obtiene los datos de la variable objetivo (Y).
+
+        Returns
+        -------
+        numpy.ndarray
+            Los datos de la variable objetivo (Y).
+        '''
+        return self.y
+
+    @y.setter
+    def y(self, nuevo_y):
+        '''Establece nuevos datos de la variable objetivo (Y).
+
+        Parameters
+        ----------
+        nuevo_y : numpy.ndarray
+            Los nuevos datos de la variable objetivo (Y) a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.y = nuevo_y
+
+    @property
+    def x(self):
+        '''Obtiene los datos de características (X) normalizados.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Los datos de características (X) normalizados.
+        '''
+        return self.x
+
+    @x.setter
+    def x(self, nuevo_x):
+        '''Establece nuevos datos de características (X) normalizados.
+
+        Parameters
+        ----------
+        nuevo_x : pandas.DataFrame
+            Los nuevos datos de características (X) normalizados a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.x = nuevo_x
+
+    @property
+    def dt(self):
+        '''Obtiene el clasificador de árbol de decisión.
+
+        Returns
+        -------
+        sklearn.tree.DecisionTreeClassifier
+            El clasificador de árbol de decisión.
+        '''
+        return self.dt
+
+    @dt.setter
+    def dt(self, nuevo_dt):
+        '''Establece un nuevo clasificador de árbol de decisión.
+
+        Parameters
+        ----------
+        nuevo_dt : sklearn.tree.DecisionTreeClassifier
+            El nuevo clasificador de árbol de decisión a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.dt = nuevo_dt
+
+    @property
+    def feature_importance_df(self):
+        '''Obtiene el DataFrame de la importancia de las características.
+
+        Returns
+        -------
+        pandas.DataFrame
+            El DataFrame de la importancia de las características.
+        '''
+        return self.feature_importance_df
+
+    @feature_importance_df.setter
+    def feature_importance_df(self, nuevo_feature_importance_df):
+        '''Establece un nuevo DataFrame de la importancia de las características.
+
+        Parameters
+        ----------
+        nuevo_feature_importance_df : pandas.DataFrame
+            El nuevo DataFrame de la importancia de las características a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.feature_importance_df = nuevo_feature_importance_df
+
+    @property
+    def accuracy_score(self):
+        '''Obtiene la puntuación de precisión del modelo.
+
+        Returns
+        -------
+        float
+            La puntuación de precisión del modelo.
+        '''
+        return self.accuracy_score
+
+    @accuracy_score.setter
+    def accuracy_score(self, nuevo_accuracy_score):
+        '''Establece una nueva puntuación de precisión del modelo.
+
+        Parameters
+        ----------
+        nuevo_accuracy_score : float
+            La nueva puntuación de precisión del modelo a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.accuracy_score = nuevo_accuracy_score
+
+    def __str__(self):
+        '''Devuelve una representación en cadena del estado del objeto ArbolDeDecision.
+
+        Returns
+        -------
+        str
+            Cadena que representa el estado del objeto ArbolDeDecision.
+        '''
+        return (f'DataFrame: {self.df}\n'
+                f'Variable objetivo: {self.target_variable}\n'
+                f'X_data: {self.x_data}\n'
+                f'Y: {self.y}\n'
+                f'X: {self.x}\n'
+                f'X_train: {self.x_train}\n'
+                f'X_test: {self.x_test}\n'
+                f'Y_train: {self.y_train}\n'
+                f'Y_test: {self.y_test}\n'
+                f'Clasificador de Árbol de Decisión: {self.dt}\n'
+                f'Importancia de Características: {self.feature_importance_df}\n'
+                f'Puntuación de Precisión: {self.accuracy_score}')
     def fit(self):
         """
         Entrena el modelo de árbol de decisión utilizando GridSearchCV 
@@ -543,6 +1110,103 @@ class RandomForestModel(PreparacionDatos):
         self.extraer_variables()
         self.dividir_datos()
 
+    @property
+    def param_grid(self):
+        '''Obtiene el diccionario de parámetros para GridSearchCV.
+
+        Returns
+        -------
+        dict
+            El diccionario de parámetros.
+        '''
+        return self.param_grid
+
+    @param_grid.setter
+    def param_grid(self, nuevo_param_grid):
+        '''Establece un nuevo diccionario de parámetros para GridSearchCV.
+
+        Parameters
+        ----------
+        nuevo_param_grid : dict
+            El nuevo diccionario de parámetros a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.param_grid = nuevo_param_grid
+
+    @property
+    def random_state(self):
+        '''Obtiene el estado aleatorio utilizado para la reproducibilidad.
+
+        Returns
+        -------
+        int
+            El estado aleatorio.
+        '''
+        return self.random_state
+
+    @random_state.setter
+    def random_state(self, nuevo_random_state):
+        '''Establece un nuevo estado aleatorio para la reproducibilidad.
+
+        Parameters
+        ----------
+        nuevo_random_state : int
+            El nuevo estado aleatorio a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.random_state = nuevo_random_state
+
+    @property
+    def best_model(self):
+        '''Obtiene el mejor modelo encontrado por GridSearchCV.
+
+        Returns
+        -------
+        sklearn.ensemble.RandomForestClassifier
+            El mejor modelo RandomForest encontrado por GridSearchCV.
+        '''
+        return self.best_model
+
+    @best_model.setter
+    def best_model(self, nuevo_best_model):
+        '''Establece el mejor modelo encontrado por GridSearchCV.
+
+        Parameters
+        ----------
+        nuevo_best_model : sklearn.ensemble.RandomForestClassifier
+            El nuevo mejor modelo RandomForest a establecer.
+
+        Returns
+        -------
+        None
+        '''
+        self.best_model = nuevo_best_model
+
+    def __str__(self):
+        '''Devuelve una representación en cadena del estado del objeto RandomForestModel.
+
+        Returns
+        -------
+        str
+            Cadena que representa el estado del objeto RandomForestModel.
+        '''
+        return (f'DataFrame: {self.df}\n'
+                f'Variable objetivo: {self.target_variable}\n'
+                f'X: {self.X}\n'
+                f'Y: {self.Y}\n'
+                f'X_train: {self.X_train}\n'
+                f'X_test: {self.X_test}\n'
+                f'Y_train: {self.Y_train}\n'
+                f'Y_test: {self.Y_test}\n'
+                f'Parámetros de GridSearchCV: {self.param_grid}\n'
+                f'Estado Aleatorio: {self.random_state}\n'
+                f'Mejor Modelo: {self.best_model}')
     # Método para ajustar el modelo.
     def fit(self):
         '''
